@@ -1,0 +1,254 @@
+/* Professional Service Card - Production Quality */
+.service-card-pro {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid #f0f0f0;
+}
+
+.service-card-pro:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Image Section - 240px height */
+.service-image-pro {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.service-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.service-card-pro:hover .service-img {
+  transform: scale(1.05);
+}
+
+/* Verified Badge - Top Right Overlay */
+.verified-badge-pro {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #10b981;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  z-index: 10;
+}
+
+/* Content Section */
+.service-content-pro {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+/* Service Name - Bold 20px */
+.service-name-pro {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.6em;
+}
+
+/* Rating Row */
+.rating-row-pro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stars-pro {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.stars-pro .star {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.stars-pro .star.filled {
+  color: #fbbf24;
+}
+
+.stars-pro .star.empty {
+  color: #d1d5db;
+}
+
+.rating-num-pro {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1a202c;
+  margin-left: 0.25rem;
+}
+
+.review-count-pro {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.new-service-badge {
+  background: #e0e7ff;
+  color: #4f46e5;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.distance-pro {
+  background: #f0f4ff;
+  color: #667eea;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Description - Max 2 lines */
+.description-pro {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.7em;
+}
+
+/* Working Hours */
+.hours-pro {
+  color: #6b7280;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Status Badge */
+.status-pro {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.status-pro.open {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-pro.closed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Contact */
+.contact-pro {
+  color: #1a202c;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Actions */
+.actions-pro {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.btn-view-pro {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-view-pro:hover {
+  background: #5568d3;
+  transform: translateY(-1px);
+}
+
+.btn-directions-pro {
+  padding: 0.75rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  font-size: 1.2rem;
+}
+
+.btn-directions-pro:hover {
+  background: #f9fafb;
+  border-color: #667eea;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .service-content-pro {
+    padding: 1rem;
+  }
+
+  .service-name-pro {
+    font-size: 1.1rem;
+  }
+
+  .service-image-pro {
+    height: 200px;
+  }
+}
+
+/* Accessibility */
+.btn-view-pro:focus,
+.btn-directions-pro:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}

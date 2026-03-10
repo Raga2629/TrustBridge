@@ -1,0 +1,256 @@
+/* ========================================
+   BOOKING SUCCESS PAGE - PREMIUM DESIGN
+   ======================================== */
+
+.booking-success-page {
+  min-height: 100vh;
+  background: #f5f6f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.success-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success Icon Animation */
+.success-icon {
+  margin-bottom: 2rem;
+}
+
+.checkmark-circle {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.checkmark {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 3;
+  stroke: #16a34a;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0 0 0 #16a34a;
+  animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
+}
+
+.checkmark-circle-bg {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke: #16a34a;
+  fill: #d1fae5;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: #16a34a;
+  stroke-width: 3;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0 0 0 60px #d1fae5;
+  }
+}
+
+/* Success Text */
+.success-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.success-subtitle {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 2.5rem;
+}
+
+/* Booking Details Card */
+.booking-details-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.detail-row:last-of-type {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.detail-value {
+  font-weight: 600;
+  color: #111827;
+  font-size: 1rem;
+  text-align: right;
+}
+
+.status-badge-success {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #d1fae5;
+  color: #16a34a;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Action Buttons */
+.success-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary-action,
+.btn-secondary-action {
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.btn-primary-action {
+  background: #2e7dff;
+  color: white;
+  box-shadow: 0 4px 12px rgba(46, 125, 255, 0.3);
+}
+
+.btn-primary-action:hover {
+  background: #1a66e0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 125, 255, 0.4);
+}
+
+.btn-secondary-action {
+  background: white;
+  color: #2e7dff;
+  border: 2px solid #2e7dff;
+}
+
+.btn-secondary-action:hover {
+  background: #f0f7ff;
+  transform: translateY(-2px);
+}
+
+/* Additional Info */
+.success-note {
+  background: #f0f7ff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid #2e7dff;
+}
+
+.success-note p {
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .success-title {
+    font-size: 2rem;
+  }
+
+  .success-subtitle {
+    font-size: 1rem;
+  }
+
+  .booking-details-card {
+    padding: 1.5rem;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .btn-primary-action,
+  .btn-secondary-action {
+    width: 100%;
+  }
+
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .detail-value {
+    text-align: left;
+  }
+}
