@@ -1,0 +1,9 @@
+node_modules/
+.env
+*.log
+trustbridge-backend/uploads/
+trustbridge-backend/ml/__pycache__/
+trustbridge-backend/ml/*.pyc
+trustbridge-backend/models/face-api/
+C:/Users/
+*.h5

@@ -1,0 +1,507 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../api/axios';
+import { useAuth } from '../context/AuthContext';
+import '../styles/AdminResidentVerification.css';
+
+const AdminResidentVerification = () => {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const [residents, setResidents] = useState([]);
+  const [filter, setFilter] = useState('PENDING');
+  const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [verificationModal, setVerificationModal] = useState(null);
+  const [verificationChecks, setVerificationChecks] = useState({
+    isAadhaarCard: false,
+    nameMatches: false,
+    photoVisible: false,
+    documentClear: false
+  });
+
+  useEffect(() => {
+    fetchResidents();
+  }, [filter]);
+
+  const fetchResidents = async () => {
+    setLoading(true);
+    try {
+      const endpoint = filter === 'PENDING' 
+        ? '/admin/residents/pending'
+        : `/admin/residents?status=${filter}`;
+      
+      const res = await axios.get(endpoint);
+      setResidents(res.data);
+    } catch (err) {
+      console.error('Fetch residents error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleApprove = async (id) => {
+    // Open verification modal instead of direct approval
+    const resident = residents.find(r => r._id === id);
+    setVerificationModal(resident);
+    setVerificationChecks({
+      isAadhaarCard: false,
+      nameMatches: false,
+      photoVisible: false,
+      documentClear: false
+    });
+  };
+
+  const confirmApproval = async () => {
+    const allChecked = Object.values(verificationChecks).every(v => v === true);
+    
+    if (!allChecked) {
+      alert('Please verify all checks before approving. If the document is not a valid Aadhaar card or details do not match, please reject instead.');
+      return;
+    }
+
+    try {
+      await axios.patch(`/admin/residents/${verificationModal._id}/approve`);
+      // Optimistic update
+      setResidents(residents.filter(r => r._id !== verificationModal._id));
+      setVerificationModal(null);
+      alert('Resident approved successfully!');
+    } catch (err) {
+      console.error('Approve error:', err);
+      alert('Failed to approve resident');
+    }
+  };
+
+  const handleReject = async (id) => {
+    const resident = residents.find(r => r._id === id);
+    const reasons = [
+      'Document is not an Aadhaar card',
+      'Name does not match registration',
+      'Photo is not clear or visible',
+      'Document appears to be fake or tampered',
+      'Address does not match claimed location',
+      'Other (please specify)'
+    ];
+
+    let reason = '';
+    const choice = prompt(
+      'Select rejection reason:\n' +
+      reasons.map((r, i) => `${i + 1}. ${r}`).join('\n') +
+      '\n\nEnter number (1-6):'
+    );
+
+    if (!choice) return;
+
+    const index = parseInt(choice) - 1;
+    if (index >= 0 && index < reasons.length) {
+      if (index === reasons.length - 1) {
+        reason = prompt('Enter custom rejection reason:');
+        if (!reason) return;
+      } else {
+        reason = reasons[index];
+      }
+    } else {
+      alert('Invalid selection');
+      return;
+    }
+
+    try {
+      await axios.patch(`/admin/residents/${id}/reject`, { reason });
+      // Optimistic update
+      setResidents(residents.filter(r => r._id !== id));
+      alert('Resident rejected successfully');
+    } catch (err) {
+      console.error('Reject error:', err);
+      alert('Failed to reject resident');
+    }
+  };
+
+  const handleSuspend = async (id) => {
+    const reason = prompt('Enter suspension reason:');
+    if (!reason) return;
+
+    try {
+      await axios.patch(`/admin/residents/${id}/suspend`, { reason });
+      // Optimistic update
+      setResidents(residents.filter(r => r._id !== id));
+    } catch (err) {
+      console.error('Suspend error:', err);
+      alert('Failed to suspend resident');
+    }
+  };
+
+  const handleReinstate = async (id) => {
+    if (!confirm('Reinstate this resident?')) return;
+
+    try {
+      await axios.patch(`/admin/residents/${id}/unsuspend`);
+      // Optimistic update
+      setResidents(residents.filter(r => r._id !== id));
+    } catch (err) {
+      console.error('Reinstate error:', err);
+      alert('Failed to reinstate resident');
+    }
+  };
+
+  const getImageUrl = (proofUrl) => {
+    if (!proofUrl) return null;
+    // If path doesn't start with /, add it
+    const path = proofUrl.startsWith('/') ? proofUrl : `/${proofUrl}`;
+    return `http://localhost:5000${path}`;
+  };
+
+  const getStatusBadgeClass = (status) => {
+    switch (status) {
+      case 'APPROVED': return 'status-approved';
+      case 'PENDING': return 'status-pending';
+      case 'REJECTED': return 'status-rejected';
+      case 'SUSPENDED': return 'status-suspended';
+      default: return '';
+    }
+  };
+
+  return (
+    <div className="admin-resident-page">
+      {/* Main Content */}
+      <div className="admin-resident-container">
+        {/* Header Section */}
+        <div className="page-header">
+          <div>
+            <h2 className="page-title">Local Resident Verification</h2>
+            <p className="page-subtitle">Review and approve resident applications</p>
+          </div>
+          <button className="btn-back" onClick={() => navigate('/admin/dashboard')}>
+            ← Back to Dashboard
+          </button>
+        </div>
+
+        {/* Filter Tabs */}
+        <div className="filter-tabs">
+          <button 
+            className={`tab-pill ${filter === 'PENDING' ? 'active' : ''}`}
+            onClick={() => setFilter('PENDING')}
+          >
+            Pending
+          </button>
+          <button 
+            className={`tab-pill ${filter === 'APPROVED' ? 'active' : ''}`}
+            onClick={() => setFilter('APPROVED')}
+          >
+            Approved
+          </button>
+          <button 
+            className={`tab-pill ${filter === 'REJECTED' ? 'active' : ''}`}
+            onClick={() => setFilter('REJECTED')}
+          >
+            Rejected
+          </button>
+          <button 
+            className={`tab-pill ${filter === 'SUSPENDED' ? 'active' : ''}`}
+            onClick={() => setFilter('SUSPENDED')}
+          >
+            Suspended
+          </button>
+        </div>
+
+        {/* Residents List */}
+        {loading ? (
+          <div className="loading-state">Loading residents...</div>
+        ) : residents.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📋</div>
+            <h3>No {filter.toLowerCase()} residents found</h3>
+            <p>There are currently no residents with this status</p>
+          </div>
+        ) : (
+          <div className="residents-grid">
+            {residents.map((resident) => (
+              <div key={resident._id} className="resident-card">
+                {/* Left Section - Profile Info */}
+                <div className="card-left">
+                  <div className="profile-header">
+                    <div>
+                      <h3 className="resident-name">{resident.user.name}</h3>
+                      <p className="resident-email">{resident.user.email}</p>
+                    </div>
+                    <span className={`status-badge ${getStatusBadgeClass(resident.verificationStatus)}`}>
+                      {resident.verificationStatus}
+                    </span>
+                  </div>
+
+                  <div className="profile-details">
+                    <div className="detail-row">
+                      <span className="detail-icon">📍</span>
+                      <span className="detail-label">Location:</span>
+                      <span className="detail-value">{resident.area}, {resident.city}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-icon">📅</span>
+                      <span className="detail-label">Years Staying:</span>
+                      <span className="detail-value">{resident.yearsStaying} years</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-icon">⭐</span>
+                      <span className="detail-label">Trust Score:</span>
+                      <span className="detail-value">{resident.trustScore}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-icon">⚠️</span>
+                      <span className="detail-label">Complaints:</span>
+                      <span className="detail-value">{resident.complaintsCount || 0}</span>
+                    </div>
+                    <div className="detail-row">
+                      <span className="detail-icon">👍</span>
+                      <span className="detail-label">Positive Feedback:</span>
+                      <span className="detail-value">{resident.positiveFeedbackCount || 0}</span>
+                    </div>
+                  </div>
+
+                  {/* Proof Document */}
+                  {resident.proofDocumentUrl && (
+                    <div className="proof-section">
+                      <p className="proof-label">Proof Document:</p>
+                      <div 
+                        className="proof-thumbnail"
+                        onClick={() => setSelectedImage(getImageUrl(resident.proofDocumentUrl))}
+                      >
+                        <img 
+                          src={getImageUrl(resident.proofDocumentUrl)} 
+                          alt="Proof Document"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="proof-placeholder" style={{ display: 'none' }}>
+                          📄 Click to view
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Rejection/Suspension Reason */}
+                  {resident.rejectionReason && (
+                    <div className="reason-box rejection">
+                      <strong>Rejection Reason:</strong>
+                      <p>{resident.rejectionReason}</p>
+                    </div>
+                  )}
+                  {resident.suspensionReason && (
+                    <div className="reason-box suspension">
+                      <strong>Suspension Reason:</strong>
+                      <p>{resident.suspensionReason}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right Section - Actions */}
+                <div className="card-right">
+                  {resident.verificationStatus === 'PENDING' && (
+                    <>
+                      <button 
+                        className="action-btn btn-approve"
+                        onClick={() => handleApprove(resident._id)}
+                      >
+                        ✓ Approve
+                      </button>
+                      <button 
+                        className="action-btn btn-reject"
+                        onClick={() => handleReject(resident._id)}
+                      >
+                        ✕ Reject
+                      </button>
+                    </>
+                  )}
+                  {resident.verificationStatus === 'APPROVED' && (
+                    <button 
+                      className="action-btn btn-suspend"
+                      onClick={() => handleSuspend(resident._id)}
+                    >
+                      ⚠ Suspend
+                    </button>
+                  )}
+                  {resident.verificationStatus === 'SUSPENDED' && (
+                    <button 
+                      className="action-btn btn-reinstate"
+                      onClick={() => handleReinstate(resident._id)}
+                    >
+                      ↻ Reinstate
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="image-modal" onClick={() => setSelectedImage(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelectedImage(null)}>
+              ✕
+            </button>
+            <img src={selectedImage} alt="Proof Document Full View" />
+          </div>
+        </div>
+      )}
+
+      {/* Verification Modal */}
+      {verificationModal && (
+        <div className="verification-modal-overlay" onClick={() => setVerificationModal(null)}>
+          <div className="verification-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>🔍 Verify Aadhaar Document</h3>
+              <button className="modal-close" onClick={() => setVerificationModal(null)}>✕</button>
+            </div>
+
+            <div className="modal-body">
+              {/* Resident Info */}
+              <div className="verification-info">
+                <h4>Applicant Details</h4>
+                <div className="info-grid">
+                  <div className="info-item">
+                    <span className="info-label">Name:</span>
+                    <span className="info-value">{verificationModal.user.name}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="info-label">Location:</span>
+                    <span className="info-value">{verificationModal.area}, {verificationModal.city}</span>
+                  </div>
+                  <div className="info-item">
+                    <span className="info-label">Years Staying:</span>
+                    <span className="info-value">{verificationModal.yearsStaying} years</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Document Preview */}
+              <div className="verification-document">
+                <h4>Uploaded Document</h4>
+                <div className="document-preview">
+                  <img 
+                    src={getImageUrl(verificationModal.proofDocumentUrl)} 
+                    alt="Aadhaar Document"
+                    onClick={() => setSelectedImage(getImageUrl(verificationModal.proofDocumentUrl))}
+                  />
+                  <p className="preview-hint">Click image to view full size</p>
+                </div>
+              </div>
+
+              {/* Verification Checklist */}
+              <div className="verification-checklist">
+                <h4>⚠️ Verification Checklist</h4>
+                <p className="checklist-instruction">
+                  Please verify ALL points before approving. If any check fails, reject the application.
+                </p>
+
+                <div className="checklist-items">
+                  <label className="checklist-item">
+                    <input
+                      type="checkbox"
+                      checked={verificationChecks.isAadhaarCard}
+                      onChange={(e) => setVerificationChecks({
+                        ...verificationChecks,
+                        isAadhaarCard: e.target.checked
+                      })}
+                    />
+                    <div className="checklist-content">
+                      <span className="checklist-title">✓ Document is a valid Aadhaar Card</span>
+                      <span className="checklist-desc">
+                        Check for UIDAI logo, 12-digit Aadhaar number, and official format
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="checklist-item">
+                    <input
+                      type="checkbox"
+                      checked={verificationChecks.nameMatches}
+                      onChange={(e) => setVerificationChecks({
+                        ...verificationChecks,
+                        nameMatches: e.target.checked
+                      })}
+                    />
+                    <div className="checklist-content">
+                      <span className="checklist-title">✓ Name matches registration</span>
+                      <span className="checklist-desc">
+                        Name on Aadhaar: <strong>{verificationModal.user.name}</strong> (should match or be similar)
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="checklist-item">
+                    <input
+                      type="checkbox"
+                      checked={verificationChecks.photoVisible}
+                      onChange={(e) => setVerificationChecks({
+                        ...verificationChecks,
+                        photoVisible: e.target.checked
+                      })}
+                    />
+                    <div className="checklist-content">
+                      <span className="checklist-title">✓ Photo is clear and visible</span>
+                      <span className="checklist-desc">
+                        Verify the person's photo is visible and matches expected gender/appearance
+                      </span>
+                    </div>
+                  </label>
+
+                  <label className="checklist-item">
+                    <input
+                      type="checkbox"
+                      checked={verificationChecks.documentClear}
+                      onChange={(e) => setVerificationChecks({
+                        ...verificationChecks,
+                        documentClear: e.target.checked
+                      })}
+                    />
+                    <div className="checklist-content">
+                      <span className="checklist-title">✓ Document is clear and not tampered</span>
+                      <span className="checklist-desc">
+                        No signs of editing, good quality, all text readable
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Warning Box */}
+              <div className="verification-warning">
+                <strong>⚠️ Important:</strong> Only approve if ALL checks pass. If the document is not a valid Aadhaar card, 
+                name doesn't match, or photo is unclear, please REJECT the application with appropriate reason.
+              </div>
+            </div>
+
+            <div className="modal-footer">
+              <button 
+                className="btn-modal-cancel" 
+                onClick={() => setVerificationModal(null)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="btn-modal-reject" 
+                onClick={() => {
+                  setVerificationModal(null);
+                  handleReject(verificationModal._id);
+                }}
+              >
+                ✕ Reject Application
+              </button>
+              <button 
+                className="btn-modal-approve" 
+                onClick={confirmApproval}
+                disabled={!Object.values(verificationChecks).every(v => v === true)}
+              >
+                ✓ Approve Resident
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AdminResidentVerification;

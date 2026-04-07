@@ -1,0 +1,219 @@
+.iv-container {
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.iv-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 560px;
+}
+
+.iv-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.4rem;
+}
+
+.iv-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.iv-status-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #1e293b;
+}
+
+.iv-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.iv-rejection {
+  width: 100%;
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+
+.iv-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.iv-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.iv-label {
+  font-weight: 600;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.iv-file-input {
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #475569;
+  background: #f8fafc;
+}
+
+.iv-file-input:hover {
+  border-color: #6366f1;
+}
+
+.iv-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.iv-preview img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+}
+
+.iv-check {
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.iv-camera {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.iv-video {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  background: #000;
+}
+
+.iv-camera-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.iv-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.iv-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.iv-btn-primary {
+  background: #6366f1;
+  color: #fff;
+}
+
+.iv-btn-primary:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.iv-btn-secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.iv-btn-secondary:hover {
+  background: #cbd5e1;
+}
+
+.iv-btn-danger {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.iv-retake {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.iv-submit {
+  width: 100%;
+  padding: 0.85rem;
+  font-size: 1rem;
+}
+
+.iv-error {
+  color: #ef4444;
+  font-size: 0.9rem;
+  background: #fee2e2;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+}
+
+.iv-result {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.iv-result.verified {
+  background: #f0fdf4;
+  border: 2px solid #22c55e;
+}
+
+.iv-result.rejected {
+  background: #fff1f2;
+  border: 2px solid #ef4444;
+}
+
+.iv-result-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.iv-result h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.4rem;
+}
+
+.iv-result p {
+  color: #475569;
+  font-size: 0.95rem;
+}

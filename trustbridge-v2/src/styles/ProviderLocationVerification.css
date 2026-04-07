@@ -1,0 +1,287 @@
+.plv-container {
+  min-height: 100vh;
+  background: #f1f5f9;
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.plv-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 720px;
+  overflow: hidden;
+}
+
+.plv-header {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  padding: 2rem;
+  color: #fff;
+}
+
+.plv-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.plv-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Status badge */
+.plv-status-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 2px solid;
+  border-radius: 12px;
+}
+
+.plv-status-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.plv-status-label {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.plv-rejection-reason {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.plv-verified-badge {
+  margin-left: auto;
+  background: #22c55e;
+  color: #fff;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Form */
+.plv-form {
+  padding: 0 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.plv-section {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.plv-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.plv-step-num {
+  width: 26px;
+  height: 26px;
+  background: #6366f1;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.plv-optional {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+.plv-hint {
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+/* Map */
+.plv-map-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+}
+
+.plv-map {
+  height: 320px;
+  width: 100%;
+  cursor: crosshair;
+}
+
+.plv-coords-display {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.88rem;
+  color: #475569;
+  background: #f8fafc;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+/* Buttons */
+.plv-btn {
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, background 0.2s;
+  font-size: 0.95rem;
+}
+
+.plv-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.plv-btn-detect {
+  background: #eef2ff;
+  color: #6366f1;
+  padding: 0.65rem 1.2rem;
+  align-self: flex-start;
+  border: 2px solid #c7d2fe;
+}
+
+.plv-btn-detect:hover:not(:disabled) {
+  background: #e0e7ff;
+}
+
+.plv-btn-submit {
+  background: #6366f1;
+  color: #fff;
+  padding: 0.9rem;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.plv-btn-submit:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+/* Form fields */
+.plv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.plv-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.plv-input,
+.plv-textarea {
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.plv-input:focus,
+.plv-textarea:focus {
+  border-color: #6366f1;
+}
+
+.plv-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.plv-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* File input */
+.plv-file-input {
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #475569;
+  background: #f8fafc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.plv-file-input:hover {
+  border-color: #6366f1;
+}
+
+.plv-file-name {
+  font-size: 0.85rem;
+  color: #6366f1;
+}
+
+.plv-existing-file {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.plv-existing-file a {
+  color: #6366f1;
+  text-decoration: underline;
+}
+
+/* Messages */
+.plv-error {
+  background: #fff1f2;
+  color: #ef4444;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.plv-success {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .plv-row {
+    flex-direction: column;
+  }
+
+  .plv-map {
+    height: 240px;
+  }
+}

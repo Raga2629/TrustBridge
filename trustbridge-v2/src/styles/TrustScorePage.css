@@ -1,0 +1,219 @@
+.ts-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ts-loading,
+.ts-error {
+  text-align: center;
+  padding: 4rem;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.ts-error { color: #ef4444; }
+
+/* Card */
+.ts-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  padding: 1.75rem;
+}
+
+.ts-main-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Gauge */
+.ts-gauge-wrapper {
+  position: relative;
+  width: 200px;
+}
+
+.ts-gauge-svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.ts-gauge-center {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  line-height: 1;
+}
+
+.ts-score-num {
+  font-size: 2.8rem;
+  font-weight: 800;
+  display: block;
+}
+
+.ts-score-label {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.ts-breakdown-desc {
+  color: #64748b;
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 320px;
+}
+
+/* Level zones */
+.ts-zones {
+  display: flex;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.ts-zone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.6rem 0.5rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  font-size: 0.82rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.ts-zone-active {
+  opacity: 1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ts-zone-range {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+/* Section title */
+.ts-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+/* Milestones */
+.ts-milestones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.ts-milestone {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+
+.ts-milestone.done {
+  opacity: 1;
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.ts-milestone-icon {
+  font-size: 1.2rem;
+  width: 28px;
+  text-align: center;
+}
+
+.ts-milestone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ts-milestone-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.ts-milestone-score {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Action list */
+.ts-action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ts-action-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.ts-action-item.ts-earn {
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.ts-action-item.ts-earn:hover {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+
+.ts-action-item.ts-lose {
+  background: #fff8f8;
+  border-color: #fecaca;
+  cursor: default;
+}
+
+.ts-action-icon {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.ts-action-label {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #334155;
+  font-weight: 500;
+}
+
+.ts-action-points {
+  font-weight: 800;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.ts-earn-pts { color: #16a34a; }
+.ts-lose-pts { color: #dc2626; }
+
+@media (max-width: 480px) {
+  .ts-gauge-wrapper { width: 160px; }
+  .ts-score-num { font-size: 2.2rem; }
+}
